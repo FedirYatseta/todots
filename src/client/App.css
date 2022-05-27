@@ -131,7 +131,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background: rgb(93, 93, 93);
+    background: #444;
     margin-bottom: 1rem;
 }
 
@@ -151,7 +151,6 @@ body {
 }
 
 .Form label {
-    color:#f5f6f7
 }
 
 .Form button {

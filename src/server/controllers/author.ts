@@ -3,11 +3,14 @@ import mongoose from 'mongoose';
 import Author from '../models/author';
 
 const createAuthor = (req: Request, res: Response, next: NextFunction) => {
-    const { name } = req.body;
+    const { name, description, status, deadline } = req.body;
 
     const author = new Author({
         _id: new mongoose.Types.ObjectId(),
-        name
+        name,
+        description,
+        status,
+        deadline
     });
 
     return author

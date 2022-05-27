@@ -3,12 +3,11 @@ import mongoose from 'mongoose';
 import Task from '../models/task';
 
 const createTask = (req: Request, res: Response, next: NextFunction) => {
-    const { author, title } = req.body;
+    const { author } = req.body;
 
     const task = new Task({
         _id: new mongoose.Types.ObjectId(),
-        author,
-        title
+        author
     });
 
     return task

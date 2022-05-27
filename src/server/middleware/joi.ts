@@ -21,13 +21,19 @@ export const ValidateJoi = (schema: ObjectSchema) => {
 export const Schemas = {
     author: {
         create: Joi.object<IAuthor>({
-            name: Joi.string().required()
+            name: Joi.string().required(),
+            description: Joi.string().required(),
+            status: Joi.boolean().required(),
+            deadline: Joi.number()
         }),
         update: Joi.object<IAuthor>({
-            name: Joi.string().required()
+            name: Joi.string().required(),
+            description: Joi.string().required(),
+            status: Joi.boolean().required(),
+            deadline: Joi.number()
         })
     },
-    book: {
+    task: {
         create: Joi.object<ITask>({
             author: Joi.string()
                 .regex(/^[0-9a-fA-F]{24}$/)

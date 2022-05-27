@@ -1,23 +1,22 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import './App.css';
 import './bootstrap.min.css'
-import { Container, } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomeScreen from './client/screens/HomeScreen';
-import SingUpScreen from './client/screens/SingUpScreen';
-import LoginScreen from './client/screens/LoginScreen';
-import Footer from './client/Component/Footer';
-import NotFound404 from './client/screens/NotFound404';
-import Header from './client/Component/Header';
-import { getTodos, addTodo, updateTodo, deleteTodo } from './client/api/api'
-import AddTodo from './client/Component/addtodo';
-import TodoItem from './client/Component/TodoItem'
+import HomeScreen from './screens/HomeScreen';
+import SingUpScreen from './screens/SingUpScreen';
+import LoginScreen from './screens/LoginScreen';
+import Footer from './Component/Footer';
+import NotFound404 from './screens/NotFound404';
+import Header from './Component/Header';
+import { getTodos, addTodo, updateTodo, deleteTodo } from './api/api'
+import AddTodo from './Component/addtodo';
+import TodoItem from './Component/TodoItem'
 
 
 
 
 const App: FC = () => {
-
   const [todos, setTodos] = useState<ITodo[]>([])
 
   useEffect(() => {
@@ -25,11 +24,11 @@ const App: FC = () => {
   }, [])
 
   const fetchTodos = (): void => {
-    debugger
     getTodos()
       .then(({ data: { todos } }: ITodo[] | any) => setTodos(todos))
       .catch((err: Error) => console.log(err))
   }
+
   const handleSaveTodo = (e: React.FormEvent, formData: ITodo): void => {
     debugger
     e.preventDefault()
@@ -66,35 +65,33 @@ const App: FC = () => {
       })
       .catch((err) => console.log(err))
   }
+
   debugger
-  return (<Router>
-    <Header />
-    <main>
-      <Container>
-        <Routes>
-          <Route path='/' element={<HomeScreen />} />
-          <Route path='/login' element={<LoginScreen />} />
-          <Route path='/signup' element={<SingUpScreen />} />
-          <Route path='/*' element={<NotFound404 />} />
-        </Routes>
+  return (
+    <Router>
+      <Header />
+      <main>
+        <Container>
+          <Routes>
+            <Route path='/' element={<HomeScreen />} />
+            <Route path='/login' element={<LoginScreen />} />
+            <Route path='/signup' element={<SingUpScreen />} />
+            <Route path='/*' element={<NotFound404 />} />
+          </Routes>
 
-        <AddTodo saveTodo={handleSaveTodo} />
+          <AddTodo saveTodo={handleSaveTodo} />
 
-        {todos?.map((todo: ITodo) => (
-
-          <TodoItem
+          {todos?.map((todo: ITodo) => (<TodoItem
             key={todo._id}
             updateTodo={handleUpdateTodo}
             deleteTodo={handleDeleteTodo}
             todo={todo}
           />
-        ))}
-      </Container>
-    </main>
-
-
-    <Footer />
-  </Router>
+          ))}
+        </Container>
+      </main>
+      <Footer />
+    </Router>
   );
 }
 
