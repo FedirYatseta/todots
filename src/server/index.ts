@@ -1,18 +1,73 @@
-import express from "express";
-import { connectToDatabase } from "./services/database.service"
-import { tasksRouter } from "./routers/tasks.router";
-const app = express();
-const port = 8080; // default port to listen
+import express from 'express';
+import http from 'http';
+import mongoose from 'mongoose';
+import { config } from './config/config';
+import Logging from './library/Logging';
+import authorRoutes from './routers/author';
+import bookRoutes from './routers/task';
 
-connectToDatabase()
+const router = express();
+
+/** Connect to Mongo */
+
+
+
+mongoose
+    .connect(config.mongo.url, { retryWrites: true, w: 'majority' })
     .then(() => {
-        app.use("/tasks", tasksRouter);
-
-        app.listen(port, () => {
-            console.log(`Server started at http://localhost:${port}`);
-        });
+        Logging.info('Mongo connected successfully.');
+        StartServer();
     })
-    .catch((error: Error) => {
-        console.error("Database connection failed", error);
-        process.exit();
+    .catch((error) => Logging.error(error));
+
+/** Only Start Server if Mongoose Connects */
+const StartServer = () => {
+    /** Log the request */
+    router.use((req, res, next) => {
+        /** Log the req */
+        Logging.info(`Incomming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
+
+        res.on('finish', () => {
+            /** Log the res */
+            Logging.info(`Result - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}] - STATUS: [${res.statusCode}]`);
+        });
+
+        next();
     });
+
+    router.use(express.urlencoded({ extended: true }));
+    router.use(express.json());
+
+    /** Rules of our API */
+    router.use((req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
+        if (req.method == 'OPTIONS') {
+            res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+            return res.status(200).json({});
+        }
+
+        next();
+    });
+
+    /** Routes */
+    router.use('/authors', authorRoutes);
+    router.use('/task', bookRoutes);
+
+    /** Healthcheck */
+    router.get('/ping', (req, res, next) => res.status(200).json({ hello: 'world' }));
+
+    /** Error handling */
+    router.use((req, res, next) => {
+        const error = new Error('Not found');
+
+        Logging.error(error);
+
+        res.status(404).json({
+            message: error.message
+        });
+    });
+
+    http.createServer(router).listen(config.server.port, () => Logging.info(`Server is running on port ${config.server.port}`));
+};
