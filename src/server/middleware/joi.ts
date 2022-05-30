@@ -27,8 +27,8 @@ export const Schemas = {
             deadline: Joi.number()
         }),
         update: Joi.object<IAuthor>({
-            name: Joi.string().required(),
-            description: Joi.string().required(),
+            name: Joi.string(),
+            description: Joi.string(),
             status: Joi.boolean().required(),
             deadline: Joi.number()
         })

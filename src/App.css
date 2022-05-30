@@ -108,6 +108,11 @@ body {
     color: #ff9900;
 }
 
+.Card--deadline span {
+    
+    color: #ffe3b9bb;
+}
+
 .Card--button button {
     background: #f5f6f7;
     padding: 0.4rem 1rem;
@@ -131,7 +136,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background: rgb(93, 93, 93);
+    background: #444;
     margin-bottom: 1rem;
 }
 
@@ -151,7 +156,6 @@ body {
 }
 
 .Form label {
-    color:#f5f6f7
 }
 
 .Form button {

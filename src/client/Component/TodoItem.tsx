@@ -13,8 +13,11 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
             <div className='Card--text'>
                 <h1 className={checkTodo}>{todo.name}</h1>
                 <span className={checkTodo}>{todo.description}</span>
-                <span className={checkTodo}>{todo.deadline}</span>
+                <div className='Card--deadline'>
+                    <span className={checkTodo}>{todo.deadline}</span>
+                </div>
             </div>
+
             <div className='Card--button'>
                 <button
                     onClick={() => updateTodo(todo)}

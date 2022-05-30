@@ -16,9 +16,11 @@ export const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
 }
 
 export const addTodo = async (
+
     formData: ITodo
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
+        debugger
         const todo: Omit<ITodo, "_id"> = {
             name: formData.name,
             description: formData.description,
@@ -37,13 +39,15 @@ export const addTodo = async (
 
 
 export const updateTodo = async (
+
     todo: ITodo
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
+        debugger
         const todoUpdate: Pick<ITodo, "status"> = {
             status: true,
         }
-        const updatedTodo: AxiosResponse<ApiDataType> = await axios.put(
+        const updatedTodo: AxiosResponse<ApiDataType> = await axios.patch(
             `${baseUrl}/update/${todo._id}`,
             todoUpdate
         )
@@ -61,6 +65,7 @@ export const deleteTodo = async (
         const deletedTodo: AxiosResponse<ApiDataType> = await axios.delete(
             `${baseUrl}/delete/${_id}`
         )
+        debugger
         return deletedTodo
     } catch (error: any) {
         throw new Error(error)

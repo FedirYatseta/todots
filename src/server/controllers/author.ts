@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import Author from '../models/author';
+import Author, { IAuthor } from '../models/author';
 
 const createAuthor = (req: Request, res: Response, next: NextFunction) => {
     const { name, description, status, deadline } = req.body;
@@ -27,10 +27,14 @@ const readAuthor = (req: Request, res: Response, next: NextFunction) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
-const readAll = (req: Request, res: Response, next: NextFunction) => {
-    return Author.find()
-        .then((authors) => res.status(200).json({ authors }))
-        .catch((error) => res.status(500).json({ error }));
+const readAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const todos: IAuthor[] = await Author.find()
+        res.status(200).json({ todos })
+    } catch (error) {
+        throw error
+    }
+
 };
 
 const updateAuthor = (req: Request, res: Response, next: NextFunction) => {
@@ -40,7 +44,6 @@ const updateAuthor = (req: Request, res: Response, next: NextFunction) => {
         .then((author) => {
             if (author) {
                 author.set(req.body);
-
                 return author
                     .save()
                     .then((author) => res.status(201).json({ author }))
@@ -52,12 +55,18 @@ const updateAuthor = (req: Request, res: Response, next: NextFunction) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
-const deleteAuthor = (req: Request, res: Response, next: NextFunction) => {
-    const authorId = req.params.authorId;
-
-    return Author.findByIdAndDelete(authorId)
+const deleteAuthor = async (req: Request, res: Response, next: NextFunction) => {
+    const authorId = req.params.authorId
+    return await Author.findByIdAndDelete(authorId)
         .then((author) => (author ? res.status(201).json({ author, message: 'Deleted' }) : res.status(404).json({ message: 'not found' })))
         .catch((error) => res.status(500).json({ error }));
 };
 
 export default { createAuthor, readAuthor, readAll, updateAuthor, deleteAuthor };
+
+// try {
+//     const todos: IAuthor[] = await Author.find()
+//     res.status(200).json({ todos })
+// } catch (error) {
+//     throw error
+// }
