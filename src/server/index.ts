@@ -1,6 +1,8 @@
 import express from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
+import register from './routers/register';
+import auth from './routers/authorize';
 import { config } from './config/config';
 import Logging from './library/Logging';
 import authorRoutes from './routers/author';
@@ -54,6 +56,8 @@ const StartServer = () => {
     /** Routes */
     router.use('/authors', authorRoutes);
     router.use('/task', bookRoutes);
+    router.use('/register', register);
+    router.use('/auth', auth);
 
     /** Healthcheck */
     router.get('/ping', (req, res, next) => res.status(200).json({ hello: 'world' }));

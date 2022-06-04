@@ -1,74 +1,4 @@
-/* h1,
-h2,
-h3,
-h4,
-h5,
-h6{
-    margin: 0;
-    padding: 0;
-}
 
-.todo{
-    padding: 0;
-    margin: 0;
-}
-
-
-.todolist{
-    margin: 10px;
-    display: flex;
-    padding: 10px;
-    align-items: center;
-    border: 1px solid #dfdfdf;
-}
-
-.todolist__input{
-    padding: 25px;
-}
-.todolist__input input{
-    padding: 10px 20px;
-    height: 20px;
-    font-weight: 500;
-    font-size: 20px;
-}
-
-.todolist button {
-    background-color: #FF6464;
-	padding: 10px 20px;
-    display: inline-flex;
-    height: 47px;
-    font-weight: 500;
-    font-size: 20px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #fff;
-    border: none;
-}
-.todolist button:hover {
-    background-color: #df3939;
-    transition:  0.3s ease 0s;
-}
-
-.task {
-    padding: 50px 0 50px 0;
-    display: flex;
-    flex: 0 1 100%;
-    flex-direction: column;
-    align-items: center;
-    background-color: #c3c3c3;
-}
-
-.todolist_item {
-    display: flex;
-    flex-wrap: nowrap;
-    
-}
-.todolist_item span{
-    padding: 15px;
-    width: 150px;
-    overflow-wrap: break-word;
-} */
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
@@ -84,13 +14,16 @@ body {
     color: #fff;
     background: #333;
 }
+.main{
+    background-color: #444;
+}
 
 .App {
     max-width: 728px;
     margin: 4rem auto;
 }
 
-.App > h1 {
+.main > h1 {
     text-align: center;
     margin: 1rem 0;
 }
@@ -155,8 +88,6 @@ body {
     margin: 0.3rem 1rem 0 0;
 }
 
-.Form label {
-}
 
 .Form button {
     background: #ff9900;

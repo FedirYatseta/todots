@@ -1,16 +1,19 @@
 import React, { SyntheticEvent, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 import FormContainer from '../Component/FormContainer'
 
-const LoginScreen = () => {
+
+
+const Login = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
 
     const submitHandler = (e: SyntheticEvent) => {
-        e.preventDefault()
 
+        e.preventDefault()
         //interact with the back using fetch
         console.log('submitted');
 
@@ -48,4 +51,4 @@ const LoginScreen = () => {
     )
 }
 
-export default LoginScreen
+export default Login

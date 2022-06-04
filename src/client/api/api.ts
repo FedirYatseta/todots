@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios"
 
-const baseUrl: string = "http://localhost:9090/authors"
+const baseUrl: string = "http://192.168.0.105:9090/authors"
 
 export const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
     debugger
@@ -15,16 +15,13 @@ export const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
     }
 }
 
-export const addTodo = async (
-
-    formData: ITodo
-): Promise<AxiosResponse<ApiDataType>> => {
+export const addTodo = async (value: ITodo): Promise<AxiosResponse<ApiDataType>> => {
     try {
         debugger
         const todo: Omit<ITodo, "_id"> = {
-            name: formData.name,
-            description: formData.description,
-            deadline: formData.deadline,
+            name: value.name,
+            description: value.description,
+            deadline: value.deadline,
             status: false,
         }
         const saveTodo: AxiosResponse<ApiDataType> = await axios.post(

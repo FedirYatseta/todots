@@ -4,7 +4,7 @@ import FormContainer from '../Component/FormContainer'
 import { useNavigate } from "react-router-dom";
 
 
-const SingUpScreen = () => {
+const Register = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -74,4 +74,4 @@ const SingUpScreen = () => {
     )
 }
 
-export default SingUpScreen
+export default Register

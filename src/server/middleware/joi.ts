@@ -24,13 +24,13 @@ export const Schemas = {
             name: Joi.string().required(),
             description: Joi.string().required(),
             status: Joi.boolean().required(),
-            deadline: Joi.number()
+            deadline: Joi.string()
         }),
         update: Joi.object<IAuthor>({
             name: Joi.string(),
             description: Joi.string(),
             status: Joi.boolean().required(),
-            deadline: Joi.number()
+            deadline: Joi.string()
         })
     },
     task: {

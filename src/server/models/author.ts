@@ -4,7 +4,7 @@ export interface IAuthor {
     name: string;
     description: string
     status: boolean
-    deadline: number
+    deadline: string
     createdAt?: string
     updatedAt?: string
 
@@ -17,7 +17,7 @@ const AuthorSchema: Schema = new Schema(
         name: { type: String, required: true },
         description: { type: String, required: false },
         status: { type: Boolean, required: true },
-        deadline: { type: Number, required: false }
+        deadline: { type: String, required: false }
     },
     {
         versionKey: false
