@@ -7,7 +7,13 @@ import { config } from './config/config';
 import Logging from './library/Logging';
 import authorRoutes from './routers/author';
 import bookRoutes from './routers/task';
-
+import refresh from './routers/refresh';
+import logout from './routers/logout';
+import verifyJWT from './middleware/verifyJWT';
+import corsOptions from './config/corsOptions';
+import cors from 'cors';
+import credentials from './middleware/credentials';
+var cookieParser = require('cookie-parser')
 const router = express();
 
 /** Connect to Mongo */
@@ -53,11 +59,30 @@ const StartServer = () => {
         next();
     });
 
+    // Handle options credentials check - before CORS!
+    // and fetch cookies credentials requirement
+    router.use(credentials);
+
+    // Cross Origin Resource Sharing
+    router.use(cors(corsOptions));
+    // built-in middleware to handle urlencoded form data
+    router.use(express.urlencoded({ extended: false }));
+
+    // built-in middleware for json 
+    router.use(express.json());
+
+    //middleware for cookies
+    router.use(cookieParser());
+
     /** Routes */
     router.use('/authors', authorRoutes);
     router.use('/task', bookRoutes);
     router.use('/register', register);
     router.use('/auth', auth);
+    router.use('/refresh', refresh);
+    router.use('/logout', logout);
+
+    router.use(verifyJWT);
 
     /** Healthcheck */
     router.get('/ping', (req, res, next) => res.status(200).json({ hello: 'world' }));
